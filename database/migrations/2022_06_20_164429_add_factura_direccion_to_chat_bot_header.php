@@ -1,0 +1,22 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddFacturaDireccionToChatBotHeader extends Migration
+{
+    public function up()
+    {
+        Schema::table('chat_bot_header', function (Blueprint $table) {
+            $table->string('factura_direccion', 200)->nullable()->after('factura_celular');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('chat_bot_header', function (Blueprint $table) {
+            $table->dropColumn('factura_direccion');
+        });
+    }
+}

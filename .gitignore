@@ -1,0 +1,16 @@
+/vendor
+.env
+.env.example
+/nbproject
+/public/img/category/
+/public/img/company/
+/public/img/product/
+/public/img/user/
+/public/images/
+/public/uploads/users/
+/public/uploads/companies/
+/public/uploads/products/
+/public/js/app.js
+/public/css/app.css
+/public/uploads/bots/
+/public/resultados/

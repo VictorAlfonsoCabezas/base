@@ -1,0 +1,3 @@
+[submodule "public/plugins/public/plugins/treeview"]
+	path = public/plugins/public/plugins/treeview
+	url = https://github.com/johnny-dev-1992/sigcrm.git
