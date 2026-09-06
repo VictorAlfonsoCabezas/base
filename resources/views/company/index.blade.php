@@ -2,21 +2,11 @@
 @section('title')Empresas @stop
 @section('breadcrumbs1')Empresas @stop
 @section('breadcrumbs2')Empresas @stop
-@section('custom_css')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-<style>
-    #map {
-        position: relative;
-        outline: none;
-        width: 650px;
-        height: 650px;
-    }
-</style>
-@stop
+@section('custom_css')@stop
 @section('content')
 <div class="row">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <div class="col-xl-6 col-lg-6 ui-sortable">
+    <div class="col-xl-12 ui-sortable">
         <div class="panel panel-inverse" data-sortable-id="index-2" data-init="true">
             <div class="panel-heading ui-sortable-handle">
                 <i class="fas fa-lg fa-fw me-10px fa-building"></i><span>Empresas</span>&nbsp;
@@ -38,7 +28,6 @@
                             <th class="text-nowrap">Empresa</th>
                             <th data-orderable="false">URL</th>
                             <th data-orderable="false">Conexión</th>
-                            <th data-orderable="false">Twilio</th>
                             <th data-orderable="false">Estado</th>
                             <th data-orderable="false">Funciones</th>
                         </tr>
@@ -62,15 +51,6 @@
                                     <i class="fas fa-lg fa-fw me-10px fa-signal"></i>
                                     @else
                                     <i class="fas fa-spinner fa-pulse text-success"></i>
-                                    @endif
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <div>
-                                    @if($value->twilio_principal)
-                                    <span onclick="javascript:showInstance('{!! $value->id !!}');" class="badge border border-primary text-primary px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i class="fa fa-circle fs-9px fa-fw me-5px"></i> I</span>
-                                    @else
-                                    <span onclick="javascript:showInstance('{!! $value->id !!}');" class="badge border border-danger text-danger px-2 pt-5px pb-5px rounded fs-12px d-inline-flex align-items-center"><i class="fa fa-circle fs-9px fa-fw me-5px"></i> I</span>
                                     @endif
                                 </div>
                             </td>
@@ -100,24 +80,12 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6 ui-sortable">
-        <div class="panel panel-inverse" data-sortable-id="index-2" data-init="true">
-            <div class="panel-heading ui-sortable-handle">
-                <i class="fas fa-lg fa-fw me-10px fa-location-arrow"></i><span>Mapa</span>&nbsp;
-            </div>
-            <div class="panel-body bg-light">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
 </div>
-@include('company/modal_instance')
+
 @endsection
 @section('scripts')
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        cargarCompanies();
         setInterval('conexionCompanies()', 10000);
         $('#table-company').DataTable();
     });
@@ -136,36 +104,6 @@
         });
     }
 
-    function cargarCompanies() {
-        $.ajax({
-            method: "GET",
-            url: "{{URL::to('company/showCompanies')}}"
-        }).done(function(res) {
-            if (res) {
-                console.log(res);
-                var map = L.map('map').setView([-1.7532045, -78.8376817], 7);
-                var token = 'pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ';
-                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + token, {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    maxZoom: 18,
-                    id: 'mapbox/streets-v11',
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    accessToken: 'your.mapbox.access.token'
-                }).addTo(map);
-                $.each(res, function(index, value) {
-                    var marker = L.marker([value.latitud, value.longitud]).addTo(map);
-                    var valor = "Sede: <b>";
-                    valor += value.name;
-                    valor += "</b><br>";
-                    valor += "<center><i>";
-                    valor += value.company.comercial_name;
-                    valor += "</i></center>";
-                    marker.bindPopup(valor);
-                });
-            }
-        });
-    }
 
     function conexionCompanies() {
         $.ajax({
@@ -210,94 +148,6 @@
         });
     }
 
-    function showInstance(company) {
-        $.ajax({
-            method: "GET",
-            url: "{{URL::to('company/knowInstance')}}/" + company
-        }).done(function(res) {
-            console.log(res);
-            if (res) {
-                var twilioPrincipal = res.company.twilio_principal;
-                $('#modal-title-company').html(res.company.company_name)
-                var tableSede = '';
-                tableSede += '<div class="table-responsive">';
-                tableSede += '  <table class="table table-striped mb-0 align-middle">';
-                tableSede += '      <thead>';
-                tableSede += '          <tr>';
-                tableSede += '              <th>#</th>';
-                tableSede += '              <th>Nombre</th>';
-                tableSede += '              <th>Latitud</th>';
-                tableSede += '              <th>Longitud</th>';
-                tableSede += '              <th>Número Twilio</th>';
-                tableSede += '              <th>Sid Twilio</th>';
-                tableSede += '              <th>Token Twilio</th>';
-                tableSede += '              <th width="1%"></th>';
-                tableSede += '          </tr>';
-                tableSede += '      </thead>';
-                tableSede += '      <tbody>';
-                $.each(res.sedes, function(index, value) {
-                    tableSede += '          <tr>';
-                    tableSede += '              <td>' + value.id + '</td>';
-                    tableSede += '              <td><b>' + value.name + '</b></td>';
-                    tableSede += '              <td><input id="lat-sede-' + value.id + '" type="text" class="form-control" value="' + value.latitud + '" style="width: 80px;"></td>';
-                    tableSede += '              <td><input id="lon-sede-' + value.id + '" type="text" class="form-control" value="' + value.longitud + '" style="width: 80px;"></td>';
-                    if (!twilioPrincipal) {
-                        tableSede += '              <td><input id="number-sede-' + value.id + '" type="text" class="form-control" value="' + value.twilio_phone_number + '" style="width: 80px;"></td>';
-                        tableSede += '              <td><input id="instance-sede-' + value.id + '" type="text" class="form-control" value="' + value.twilio_sid + '" style="width: 80px;"></td>';
-                        tableSede += '              <td><input id="token-sede-' + value.id + '" type="text" class="form-control" value="' + value.twilio_token + '" style="width: 180px;"></td>';
-                    } else {
-                        tableSede += '              <td><h5>' + value.twilio_phone_number + '</h5></td>';
-                        tableSede += '              <td><h5>' + value.twilio_sid + '</h5></td>';
-                        tableSede += '              <td><h5>' + value.twilio_token + '</h5></td>';
-                    }
-                    tableSede += '              <td nowrap="">';
-                    tableSede += '                  <a onclick="javascript:saveSede(' + twilioPrincipal + ',' + value.id + ');" class="btn btn-sm btn-primary w-72px me-1">Guardar</a>';
-                    tableSede += '              </td>';
-                    tableSede += '          </tr>';
 
-                });
-                tableSede += '      </tbody>';
-                tableSede += '   </table>';
-                tableSede += '</div>';
-                $('#table-sedes-modal').html(tableSede);
-                $('#modalInstance').modal('show');
-            }
-        });
-    }
-
-    function saveSede(twilioPrincipal, id) {
-        console.log(id);
-        var latitud = $('#lat-sede-' + id).val();
-        var longitud = $('#lon-sede-' + id).val();
-        var instancia = '';
-        var token = '';
-        var number = '';
-        if(!twilioPrincipal){
-            var instancia = $('#instance-sede-' + id).val();
-            var token = $('#token-sede-' + id).val();
-            var number = $('#number-sede-' + id).val();
-        }
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: "PUT",
-            url: "{{URL::to('company/updateSede')}}/" + id,
-            data: {
-                latitud: latitud,
-                longitud: longitud,
-                instancia: instancia,
-                token: token,
-                number: number,
-            },
-        }).done(function(res) {
-            if (res) {
-                alerta.toast('Notificación', 'Se actualizó correctamente...', 'success');
-                $('#modalInstance').modal('hide');
-            }
-        });
-
-
-    }
 </script>
 @stop

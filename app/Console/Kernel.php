@@ -18,8 +18,6 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('envios:programados')->everyMinute();
-        $schedule->command('desactivar:interconexion')->everyMinute();
     }
 
     protected function commands()

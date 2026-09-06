@@ -11,7 +11,6 @@ class Customer extends Model
     protected $fillable = [
         'id',
         'company_id',
-        'sede_id',
         'company_assigned_id',
         'name',
         'nombres',
@@ -36,10 +35,6 @@ class Customer extends Model
         'status',
     ];
     
-    public function sede()
-    {
-        return $this->belongsTo('App\Models\Sede', 'sede_id');
-    }
     public function company()
     {
         return $this->belongsTo('App\Models\Company', 'company_id');

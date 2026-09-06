@@ -249,83 +249,9 @@
 
 
 
-                    <!-- <div class="card-header p-0 border-bottom-0">
-                        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#basic" role="tab" aria-controls="custom-tabs-three-home" aria-selected="false">Información</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#tax" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="true">Servicios</a>
-                            </li>
-                        </ul>
-                    </div> -->
-
-                    <!-- <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-three-tabContent">
 
 
-                            <div class="tab-pane fade active show" id="basic" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
-                                <div class="row">
-                                    <section class="col col-sm-6">
-                                        <div class="form-group">
-                                            <label for="company_name">Nombre de la Empresa</label>
-                                            <input type="text" class="form-control text-uppercase" name="company_name" id="company_name" placeholder="Nombre de la Empresa" value="{{old('company_name',$company->company_name)}}" required>
-                                        </div>
-                                    </section>
-                                    <section class="col col-sm-6">
-                                        <div class="form-group">
-                                            <label for="ruc">RUC</label>
-                                            <input type="number" class="form-control text-uppercase" name="ruc" id="ruc" placeholder="RUC" value="{{old('company_name',$company->ruc)}}" required>
-                                        </div>
-                                    </section>
-                                </div>
-                                <hr class="my-10">
-                                <div class="row col col-sm-12">
-                                    <section class="col col-sm-6">
-                                        <div class="form-group">
-                                            <label for="phone">Telefono</label>
-                                            <input type="number" class="form-control text-uppercase" name="phone" id="phone" placeholder="Telefono" value="{{old('company_name',$company->phone)}}" required>
-                                        </div>
-                                    </section>
-                                    <section class="col col-sm-6">
-                                        <div class="form-group">
-                                            <label for="email">E-mail</label>
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Correo Electrónico" value="{{old('company_name',$company->email)}}" required>
-                                        </div>
-                                    </section>
-                                    <section class="col col-sm-12">
-                                        <div class="form-group">
-                                            <label for="address">Dirección</label>
-                                            <textarea class="form-control text-uppercase" name="address" id="address" required>{{old('company_name',$company->address)}}</textarea>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
 
-
-                            <div class="tab-pane fade" id="tax" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
-                                <div class="form-group">
-                                    <section class="col col-sm-4">
-                                        <div class="form-group">
-                                            <label for="token_company">Token API</label>
-                                            <input type="text" class="form-control text-uppercase" name="token_company" id="token_company" readonly="" value="{{old('company_name',$company->token_interno)}}" required>
-                                        </div>
-                                    </section>
-                                    @foreach($service as $ser)
-                                    <div class="custom-control custom-checkbox">
-                                        @if($ser['vista'])
-                                        <input class="custom-control-input" type="checkbox" id="check-{{$ser['id']}}" name="check-{{$ser['id']}}" value="{{$ser['id']}}" checked="">
-                                        @else
-                                        <input class="custom-control-input" type="checkbox" id="check-{{$ser['id']}}" name="check-{{$ser['id']}}" value="{{$ser['id']}}">
-                                        @endif
-                                        <label for="check-{{$ser['id']}}" class="custom-control-label">{{$ser['name']}}</label>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> -->
 
 
 

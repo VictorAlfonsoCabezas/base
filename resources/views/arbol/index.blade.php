@@ -48,9 +48,6 @@
                                                 <label>MENU</label>
                                                 <select class="form-select form-select-xs" id="menu_type" name="menu_type">
                                                     <option value="DEFAULT">DEFECTO</option>
-                                                    <option value="AGENTE">AGENTE</option>
-                                                    <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                                                    <option value="SUPERADMINISTRADOR">SUPERADMINISTRADOR</option>
                                                 </select>
                                             </div>
                                         </section>
@@ -80,9 +77,6 @@
                                     <td>
                                         <select class="form-select form-select-lg" onchange="javascript:cambioMenu('{!! $rol->id !!}');" id="menu_type-{{$rol->id}}">
                                             <option value="DEFAULT" {{($rol->menu_type == 'DEFAULT')?'selected=""':''}}>DEFECTO</option>
-                                            <option value="AGENTE" {{($rol->menu_type == 'AGENT')?'selected=""':''}}>AGENTE</option>
-                                            <option value="ADMINISTRADOR" {{($rol->menu_type == 'ADMINISTRADOR')?'selected=""':''}}>ADMINISTRADOR</option>
-                                            <option value="SUPERADMINISTRADOR" {{($rol->menu_type == 'SUPERADMINISTRADOR')?'selected=""':''}}>SUPERADMINISTRADOR</option>
                                         </select>
                                     </td>
                                     <td class="text-center">
